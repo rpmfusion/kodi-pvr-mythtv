@@ -1,6 +1,6 @@
-%global commit 9eb2058844ef078288094db5b305ddce2d5cf961
+%global commit a41fed4cc70cabf1d3b157dca61d7352f2292398
 %global short_commit %(c=%{commit}; echo ${c:0:7})
-%global commit_date 20170419
+%global commit_date 20170827
 
 %global kodi_addon pvr.mythtv
 %global kodi_version 17.0
@@ -9,8 +9,8 @@ Name:           kodi-%(tr "." "-" <<<%{kodi_addon})
 # Use Epoch to manage upgrades from older upstream
 # (https://github.com/opdenkamp/xbmc-pvr-addons/)
 Epoch:          1
-Version:        4.12.14
-Release:        2%{?dist}
+Version:        4.12.17
+Release:        1%{?dist}
 Summary:        MythTV PVR for Kodi
 
 Group:          Applications/Multimedia
@@ -65,6 +65,9 @@ cp -p %{SOURCE1} .
 
 
 %changelog
+* Tue Feb 20 2018 Mohamed El Morabity <melmorabity@fedoraproject.org> - 1:4.12.17-1
+- Update to 4.12.17
+
 * Thu Aug 31 2017 RPM Fusion Release Engineering <kwizart@rpmfusion.org> - 1:4.12.14-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Mass_Rebuild
 
