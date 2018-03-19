@@ -1,32 +1,33 @@
 diff -up ./CMakeLists.txt.orig ./CMakeLists.txt
---- ./CMakeLists.txt.orig	2017-04-19 15:44:27.000000000 +0200
-+++ ./CMakeLists.txt	2017-04-24 23:49:24.550567499 +0200
-@@ -10,6 +10,13 @@ enable_language(C)
+--- ./CMakeLists.txt.orig	2018-02-25 20:43:55.000000000 +0100
++++ ./CMakeLists.txt	2018-03-15 15:30:10.575409084 +0100
+@@ -10,9 +10,12 @@ enable_language(C)
  find_package(Kodi REQUIRED)
  find_package(kodiplatform REQUIRED)
  find_package(p8-platform REQUIRED)
 +find_package(PkgConfig)
 +pkg_check_modules(CPPMYTH REQUIRED cppmyth)
-+
-+set(CFLAGS ${CPPMYTH_CFLAGS} ${CPPMYTH_CFLAGS_OTHERS})
-+add_definitions(${CFLAGS})
-+set(LIBS ${CPPMYTH_CFLAGS} ${CPPMYTH_LIBRARIES})
-+link_libraries(${LIBS})
  
  include_directories(${kodiplatform_INCLUDE_DIRS}
                      ${p8-platform_INCLUDE_DIRS}
-@@ -51,8 +58,6 @@ set(MYTHTV_SOURCES src/avinfo.cpp
-                    src/fileOps.cpp
-                    src/filestreaming.cpp)
++                    ${CPPMYTH_INCLUDE_DIRS}
+                     ${KODI_INCLUDE_DIR}
+                     ${PROJECT_SOURCE_DIR}/lib/cppmyth/src)
+ 
+@@ -32,9 +35,7 @@ file (GLOB MYTHTV_HEADERS
+   src/cppmyth/*.h
+   src/*.h)
  
 -add_subdirectory(lib/cppmyth)
 -
- set(DEPLIBS ${p8-platform_LIBRARIES} cppmyth)
+-set(DEPLIBS ${p8-platform_LIBRARIES} cppmyth)
++set(DEPLIBS ${p8-platform_LIBRARIES} ${CPPMYTH_LIBRARIES})
  if(WIN32)
    list(APPEND DEPLIBS ws2_32)
+ else()
 diff -up ./src/avinfo.h.orig ./src/avinfo.h
---- ./src/avinfo.h.orig	2017-04-19 15:44:27.000000000 +0200
-+++ ./src/avinfo.h	2017-04-24 23:47:36.928418218 +0200
+--- ./src/avinfo.h.orig	2018-02-25 20:43:55.000000000 +0100
++++ ./src/avinfo.h	2018-03-15 15:26:30.283134742 +0100
 @@ -24,7 +24,7 @@
  #include "demuxer/tsDemuxer.h"
  #include "client.h"
@@ -37,8 +38,8 @@ diff -up ./src/avinfo.h.orig ./src/avinfo.h
  #include <set>
  #include <vector>
 diff -up ./src/cppmyth/MythChannel.h.orig ./src/cppmyth/MythChannel.h
---- ./src/cppmyth/MythChannel.h.orig	2017-04-19 15:44:27.000000000 +0200
-+++ ./src/cppmyth/MythChannel.h	2017-04-24 23:47:36.929418191 +0200
+--- ./src/cppmyth/MythChannel.h.orig	2018-02-25 20:43:55.000000000 +0100
++++ ./src/cppmyth/MythChannel.h	2018-03-15 15:23:01.194937844 +0100
 @@ -19,7 +19,7 @@
   *
   */
@@ -49,8 +50,8 @@ diff -up ./src/cppmyth/MythChannel.h.orig ./src/cppmyth/MythChannel.h
  class MythChannel
  {
 diff -up ./src/cppmyth/MythEPGInfo.h.orig ./src/cppmyth/MythEPGInfo.h
---- ./src/cppmyth/MythEPGInfo.h.orig	2017-04-19 15:44:27.000000000 +0200
-+++ ./src/cppmyth/MythEPGInfo.h	2017-04-24 23:47:36.929418191 +0200
+--- ./src/cppmyth/MythEPGInfo.h.orig	2018-02-25 20:43:55.000000000 +0100
++++ ./src/cppmyth/MythEPGInfo.h	2018-03-15 15:23:17.412533201 +0100
 @@ -19,7 +19,7 @@
   *
   */
@@ -61,8 +62,8 @@ diff -up ./src/cppmyth/MythEPGInfo.h.orig ./src/cppmyth/MythEPGInfo.h
  class MythEPGInfo
  {
 diff -up ./src/cppmyth/MythProgramInfo.h.orig ./src/cppmyth/MythProgramInfo.h
---- ./src/cppmyth/MythProgramInfo.h.orig	2017-04-19 15:44:27.000000000 +0200
-+++ ./src/cppmyth/MythProgramInfo.h	2017-04-24 23:47:36.929418191 +0200
+--- ./src/cppmyth/MythProgramInfo.h.orig	2018-02-25 20:43:55.000000000 +0100
++++ ./src/cppmyth/MythProgramInfo.h	2018-03-15 15:23:35.925072615 +0100
 @@ -19,7 +19,7 @@
   *
   */
@@ -73,8 +74,8 @@ diff -up ./src/cppmyth/MythProgramInfo.h.orig ./src/cppmyth/MythProgramInfo.h
  class MythProgramInfo;
  typedef std::map<std::string, MythProgramInfo> ProgramInfoMap;
 diff -up ./src/cppmyth/MythRecordingRule.h.orig ./src/cppmyth/MythRecordingRule.h
---- ./src/cppmyth/MythRecordingRule.h.orig	2017-04-19 15:44:27.000000000 +0200
-+++ ./src/cppmyth/MythRecordingRule.h	2017-04-24 23:47:36.930418165 +0200
+--- ./src/cppmyth/MythRecordingRule.h.orig	2018-02-25 20:43:55.000000000 +0100
++++ ./src/cppmyth/MythRecordingRule.h	2018-03-15 15:23:52.616606084 +0100
 @@ -19,7 +19,7 @@
   *
   */
@@ -85,8 +86,8 @@ diff -up ./src/cppmyth/MythRecordingRule.h.orig ./src/cppmyth/MythRecordingRule.
  class MythRecordingRule
  {
 diff -up ./src/cppmyth/MythScheduleManager.h.orig ./src/cppmyth/MythScheduleManager.h
---- ./src/cppmyth/MythScheduleManager.h.orig	2017-04-19 15:44:27.000000000 +0200
-+++ ./src/cppmyth/MythScheduleManager.h	2017-04-24 23:47:36.930418165 +0200
+--- ./src/cppmyth/MythScheduleManager.h.orig	2018-02-25 20:43:55.000000000 +0100
++++ ./src/cppmyth/MythScheduleManager.h	2018-03-15 15:24:16.883918927 +0100
 @@ -19,7 +19,7 @@
   *
   */
@@ -96,21 +97,9 @@ diff -up ./src/cppmyth/MythScheduleManager.h.orig ./src/cppmyth/MythScheduleMana
  #include "MythRecordingRule.h"
  #include "MythProgramInfo.h"
  #include "MythEPGInfo.h"
-diff -up ./src/demux.h.orig ./src/demux.h
---- ./src/demux.h.orig	2017-04-19 15:44:27.000000000 +0200
-+++ ./src/demux.h	2017-04-24 23:47:36.931418138 +0200
-@@ -24,7 +24,7 @@
- #include "demuxer/tsDemuxer.h"
- #include "client.h"
- 
--#include <mythstream.h>
-+#include <cppmyth/mythstream.h>
- #include <p8-platform/threads/threads.h>
- #include <p8-platform/threads/mutex.h>
- #include <p8-platform/util/buffer.h>
 diff -up ./src/fileOps.h.orig ./src/fileOps.h
---- ./src/fileOps.h.orig	2017-04-19 15:44:27.000000000 +0200
-+++ ./src/fileOps.h	2017-04-24 23:47:36.931418138 +0200
+--- ./src/fileOps.h.orig	2018-02-25 20:43:55.000000000 +0100
++++ ./src/fileOps.h	2018-03-15 15:26:52.369583754 +0100
 @@ -24,7 +24,7 @@
  #include "cppmyth/MythChannel.h"
  #include "cppmyth/MythProgramInfo.h"
@@ -121,8 +110,8 @@ diff -up ./src/fileOps.h.orig ./src/fileOps.h
  
  #include <string>
 diff -up ./src/filestreaming.h.orig ./src/filestreaming.h
---- ./src/filestreaming.h.orig	2017-04-19 15:44:27.000000000 +0200
-+++ ./src/filestreaming.h	2017-04-24 23:47:36.931418138 +0200
+--- ./src/filestreaming.h.orig	2018-02-25 20:43:55.000000000 +0100
++++ ./src/filestreaming.h	2018-03-15 15:27:08.972125702 +0100
 @@ -21,7 +21,7 @@
   *
   */
@@ -133,9 +122,9 @@ diff -up ./src/filestreaming.h.orig ./src/filestreaming.h
  class FileStreaming : public Myth::Stream
  {
 diff -up ./src/pvrclient-mythtv.h.orig ./src/pvrclient-mythtv.h
---- ./src/pvrclient-mythtv.h.orig	2017-04-19 15:44:27.000000000 +0200
-+++ ./src/pvrclient-mythtv.h	2017-04-24 23:47:36.932418112 +0200
-@@ -29,12 +29,12 @@
+--- ./src/pvrclient-mythtv.h.orig	2018-02-25 20:43:55.000000000 +0100
++++ ./src/pvrclient-mythtv.h	2018-03-15 15:27:51.067967472 +0100
+@@ -28,12 +28,12 @@
  
  #include <xbmc_pvr_types.h>
  #include <p8-platform/threads/mutex.h>
