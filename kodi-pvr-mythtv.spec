@@ -10,7 +10,7 @@ Name:           kodi-%(tr "." "-" <<<%{kodi_addon})
 # (https://github.com/opdenkamp/xbmc-pvr-addons/)
 Epoch:          1
 Version:        5.8.6
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        MythTV PVR for Kodi
 
 # Some cppmyth private headers are LGPLv2+
@@ -32,7 +32,7 @@ BuildRequires:  pkgconfig(cppmyth)
 BuildRequires:  platform-devel
 BuildRequires:  zlib-devel
 Requires:       kodi >= %{kodi_version}
-ExclusiveArch:  i686 x86_64 aarch64
+ExcludeArch:    %{power64} ppc64le
 
 %description
 %{summary}.
@@ -61,6 +61,9 @@ find lib/cppmyth/ -type f -not -path "lib/cppmyth/src/private/*" -delete
 
 
 %changelog
+* Mon Oct 15 2018 Mohamed El Morabity <melmorabity@fedoraproject.org> - 1:5.8.6-2
+- Enable arm build
+
 * Sat Sep 01 2018 Mohamed El Morabity <melmorabity@fedoraproject.org> - 1:5.8.6-1
 - Update to 5.8.6
 - Enable aarch64 build
