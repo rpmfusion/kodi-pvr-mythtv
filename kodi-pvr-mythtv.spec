@@ -9,8 +9,8 @@ Name:           kodi-%(tr "." "-" <<<%{kodi_addon})
 # Use Epoch to manage upgrades from older upstream
 # (https://github.com/opdenkamp/xbmc-pvr-addons/)
 Epoch:          1
-Version:        5.8.6
-Release:        2%{?dist}
+Version:        5.10.2
+Release:        1%{?dist}
 Summary:        MythTV PVR for Kodi
 
 # Some cppmyth private headers are LGPLv2+
@@ -61,6 +61,9 @@ find lib/cppmyth/ -type f -not -path "lib/cppmyth/src/private/*" -delete
 
 
 %changelog
+* Sun Dec 23 2018 Leigh Scott <leigh123linux@googlemail.com> - 1:5.10.2-1
+- Update to 5.10.2 (rfbz #5121)
+
 * Mon Oct 15 2018 Mohamed El Morabity <melmorabity@fedoraproject.org> - 1:5.8.6-2
 - Enable arm build
 
