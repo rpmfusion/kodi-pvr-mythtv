@@ -28,7 +28,7 @@ BuildRequires:  cmake3
 BuildRequires:  gcc-c++
 BuildRequires:  kodi-devel >= %{kodi_version}
 BuildRequires:  kodi-platform-devel >= %{kodi_version}
-BuildRequires:  pkgconfig(cppmyth)
+BuildRequires:  pkgconfig(cppmyth) >= 2.12.1
 BuildRequires:  platform-devel
 BuildRequires:  zlib-devel
 Requires:       kodi >= %{kodi_version}
