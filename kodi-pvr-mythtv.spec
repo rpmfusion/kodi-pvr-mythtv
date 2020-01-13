@@ -1,28 +1,21 @@
-%global commit 179b6ea5ad6a394a7e59be25ae72bc5033c9cb35
-%global shortcommit %(c=%{commit}; echo ${c:0:7})
-%global commitdate 20190408
-
 %global kodi_addon pvr.mythtv
 %global kodi_version 18.0
+%global kodi_codename Leia
 
 Name:           kodi-%(tr "." "-" <<<%{kodi_addon})
 # Use Epoch to manage upgrades from older upstream
 # (https://github.com/opdenkamp/xbmc-pvr-addons/)
 Epoch:          1
-Version:        5.10.7
+Version:        5.10.15
 Release:        1%{?dist}
 Summary:        MythTV PVR for Kodi
 
 # Some cppmyth private headers are LGPLv2+
 License:        GPLv2+ and LGPLv2+
-# Switch to main developer's fork for Kodi 18 support until the main
-# project is updated
-# URL:            https://github.com/kodi-pvr/%%{kodi_addon}/
-# Source0:        https://github.com/kodi-pvr/%%{kodi_addon}/archive/%%{shortcommit}/%%{kodi_addon}-%%{shortcommit}.tar.gz
 URL:            https://github.com/janbar/%{kodi_addon}/
-Source0:        %{url}/archive/%{shortcommit}/%{kodi_addon}-%{shortcommit}.tar.gz
+Source0:        %{url}/archive/%{version}-%{kodi_codename}/%{kodi_addon}-%{version}.tar.gz
 # Use external cppmyth library
-Patch0:         %{name}-5.7.0-use_external_cppmyth.patch
+Patch0:         %{name}-5.10.15-use_external_cppmyth.patch
 
 BuildRequires:  cmake3
 BuildRequires:  gcc-c++
@@ -39,7 +32,7 @@ ExcludeArch:    %{power64} ppc64le
 
 
 %prep
-%autosetup -n %{kodi_addon}-%{commit} -p0
+%autosetup -n %{kodi_addon}-%{version}-%{kodi_codename} -p0
 
 # Drop bundled cppmyth library, except private headers
 find lib/cppmyth/ -type f -not -path "lib/cppmyth/src/private/*" -delete
@@ -61,6 +54,9 @@ find lib/cppmyth/ -type f -not -path "lib/cppmyth/src/private/*" -delete
 
 
 %changelog
+* Mon Jan 13 2020 Mohamed El Morabity <melmorabity@fedoraproject.org> - 1:5.10.15-1
+- Update to 5.10.15
+
 * Sat Jul 27 2019 Leigh Scott <leigh123linux@googlemail.com> - 1:5.10.7-1
 - Update to 5.10.7 (rfbz #5304)
 
