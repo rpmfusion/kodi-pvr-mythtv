@@ -2,6 +2,8 @@
 %global kodi_version 18.0
 %global kodi_codename Leia
 
+%undefine __cmake_in_source_build
+
 Name:           kodi-%(tr "." "-" <<<%{kodi_addon})
 # Use Epoch to manage upgrades from older upstream
 # (https://github.com/opdenkamp/xbmc-pvr-addons/)
@@ -39,12 +41,12 @@ find lib/cppmyth/ -type f -not -path "lib/cppmyth/src/private/*" -delete
 
 
 %build
-%cmake3 .
-%make_build
+%cmake3
+%cmake3_build
 
 
 %install
-%make_install
+%cmake3_install
 
 
 %files
