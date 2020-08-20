@@ -1,6 +1,6 @@
 diff -up ./CMakeLists.txt.orig ./CMakeLists.txt
---- ./CMakeLists.txt.orig	2020-01-09 19:52:50.000000000 +0100
-+++ ./CMakeLists.txt	2020-01-13 14:55:44.178476740 +0100
+--- ./CMakeLists.txt.orig	2020-07-15 07:57:28.000000000 +0000
++++ ./CMakeLists.txt	2020-08-20 09:30:20.602092660 +0000
 @@ -7,8 +7,11 @@ set(CMAKE_CXX_STANDARD 11)
  set(CMAKE_CXX_STANDARD_REQUIRED ON)
  
@@ -25,32 +25,32 @@ diff -up ./CMakeLists.txt.orig ./CMakeLists.txt
    list(APPEND DEPLIBS ws2_32)
  else()
 diff -up ./src/artworksmanager.h.orig ./src/artworksmanager.h
---- ./src/artworksmanager.h.orig	2020-01-09 19:52:50.000000000 +0100
-+++ ./src/artworksmanager.h	2020-01-13 14:59:21.554803199 +0100
-@@ -24,7 +24,7 @@
- #include "cppmyth/MythChannel.h"
+--- ./src/artworksmanager.h.orig	2020-07-15 07:57:28.000000000 +0000
++++ ./src/artworksmanager.h	2020-08-20 09:56:06.292325528 +0000
+@@ -25,7 +25,7 @@
  #include "cppmyth/MythProgramInfo.h"
  
+ #include <kodi/AddonBase.h>
 -#include <mythwsapi.h>
 +#include <cppmyth/mythwsapi.h>
  
  #include <string>
  
 diff -up ./src/avinfo.h.orig ./src/avinfo.h
---- ./src/avinfo.h.orig	2020-01-09 19:52:50.000000000 +0100
-+++ ./src/avinfo.h	2020-01-13 14:59:21.545803434 +0100
-@@ -24,7 +24,7 @@
+--- ./src/avinfo.h.orig	2020-07-15 07:57:28.000000000 +0000
++++ ./src/avinfo.h	2020-08-20 09:56:06.289325602 +0000
+@@ -23,7 +23,7 @@
+ 
  #include "demuxer/tsDemuxer.h"
- #include "client.h"
  
 -#include <mythstream.h>
 +#include <cppmyth/mythstream.h>
+ #include <kodi/AddonBase.h>
  
  #include <set>
- #include <vector>
 diff -up ./src/cppmyth/MythChannel.h.orig ./src/cppmyth/MythChannel.h
---- ./src/cppmyth/MythChannel.h.orig	2020-01-09 19:52:50.000000000 +0100
-+++ ./src/cppmyth/MythChannel.h	2020-01-13 14:59:21.606801842 +0100
+--- ./src/cppmyth/MythChannel.h.orig	2020-07-15 07:57:28.000000000 +0000
++++ ./src/cppmyth/MythChannel.h	2020-08-20 09:56:06.270326068 +0000
 @@ -19,7 +19,7 @@
   *
   */
@@ -61,8 +61,8 @@ diff -up ./src/cppmyth/MythChannel.h.orig ./src/cppmyth/MythChannel.h
  class MythChannel
  {
 diff -up ./src/cppmyth/MythEPGInfo.h.orig ./src/cppmyth/MythEPGInfo.h
---- ./src/cppmyth/MythEPGInfo.h.orig	2020-01-09 19:52:50.000000000 +0100
-+++ ./src/cppmyth/MythEPGInfo.h	2020-01-13 14:59:21.610801738 +0100
+--- ./src/cppmyth/MythEPGInfo.h.orig	2020-07-15 07:57:28.000000000 +0000
++++ ./src/cppmyth/MythEPGInfo.h	2020-08-20 09:56:06.277325896 +0000
 @@ -19,7 +19,7 @@
   *
   */
@@ -73,8 +73,8 @@ diff -up ./src/cppmyth/MythEPGInfo.h.orig ./src/cppmyth/MythEPGInfo.h
  class MythEPGInfo
  {
 diff -up ./src/cppmyth/MythProgramInfo.h.orig ./src/cppmyth/MythProgramInfo.h
---- ./src/cppmyth/MythProgramInfo.h.orig	2020-01-09 19:52:50.000000000 +0100
-+++ ./src/cppmyth/MythProgramInfo.h	2020-01-13 14:59:21.628801268 +0100
+--- ./src/cppmyth/MythProgramInfo.h.orig	2020-07-15 07:57:28.000000000 +0000
++++ ./src/cppmyth/MythProgramInfo.h	2020-08-20 09:56:06.283325749 +0000
 @@ -19,7 +19,7 @@
   *
   */
@@ -85,8 +85,8 @@ diff -up ./src/cppmyth/MythProgramInfo.h.orig ./src/cppmyth/MythProgramInfo.h
  class MythProgramInfo;
  typedef std::map<std::string, MythProgramInfo> ProgramInfoMap;
 diff -up ./src/cppmyth/MythRecordingRule.h.orig ./src/cppmyth/MythRecordingRule.h
---- ./src/cppmyth/MythRecordingRule.h.orig	2020-01-09 19:52:50.000000000 +0100
-+++ ./src/cppmyth/MythRecordingRule.h	2020-01-13 14:59:21.617801555 +0100
+--- ./src/cppmyth/MythRecordingRule.h.orig	2020-07-15 07:57:28.000000000 +0000
++++ ./src/cppmyth/MythRecordingRule.h	2020-08-20 09:56:06.274325970 +0000
 @@ -19,7 +19,7 @@
   *
   */
@@ -97,8 +97,8 @@ diff -up ./src/cppmyth/MythRecordingRule.h.orig ./src/cppmyth/MythRecordingRule.
  class MythRecordingRule
  {
 diff -up ./src/cppmyth/MythScheduleManager.h.orig ./src/cppmyth/MythScheduleManager.h
---- ./src/cppmyth/MythScheduleManager.h.orig	2020-01-09 19:52:50.000000000 +0100
-+++ ./src/cppmyth/MythScheduleManager.h	2020-01-13 14:59:21.632801164 +0100
+--- ./src/cppmyth/MythScheduleManager.h.orig	2020-07-15 07:57:28.000000000 +0000
++++ ./src/cppmyth/MythScheduleManager.h	2020-08-20 09:56:06.280325823 +0000
 @@ -19,7 +19,7 @@
   *
   */
@@ -109,24 +109,24 @@ diff -up ./src/cppmyth/MythScheduleManager.h.orig ./src/cppmyth/MythScheduleMana
  #include "MythProgramInfo.h"
  #include "MythEPGInfo.h"
 diff -up ./src/filestreaming.h.orig ./src/filestreaming.h
---- ./src/filestreaming.h.orig	2020-01-09 19:52:50.000000000 +0100
-+++ ./src/filestreaming.h	2020-01-13 14:59:21.540803565 +0100
-@@ -21,7 +21,7 @@
-  *
-  */
+--- ./src/filestreaming.h.orig	2020-07-15 07:57:28.000000000 +0000
++++ ./src/filestreaming.h	2020-08-20 09:56:06.286325675 +0000
+@@ -23,7 +23,7 @@
+ 
+ #include <kodi/Filesystem.h>
  
 -#include <mythstream.h>
 +#include <cppmyth/mythstream.h>
  
- class FileStreaming : public Myth::Stream
+ class ATTRIBUTE_HIDDEN FileStreaming : public Myth::Stream
  {
 diff -up ./src/pvrclient-mythtv.h.orig ./src/pvrclient-mythtv.h
---- ./src/pvrclient-mythtv.h.orig	2020-01-09 19:52:50.000000000 +0100
-+++ ./src/pvrclient-mythtv.h	2020-01-13 14:59:21.550803304 +0100
-@@ -26,12 +26,12 @@
- #include "categories.h"
+--- ./src/pvrclient-mythtv.h.orig	2020-07-15 07:57:28.000000000 +0000
++++ ./src/pvrclient-mythtv.h	2020-08-20 09:56:06.267326142 +0000
+@@ -27,12 +27,12 @@
+ #include "settings.h"
  
- #include <kodi/xbmc_pvr_types.h>
+ #include <kodi/addon-instance/PVR.h>
 -#include <mythsharedptr.h>
 -#include <mythcontrol.h>
 -#include <mytheventhandler.h>

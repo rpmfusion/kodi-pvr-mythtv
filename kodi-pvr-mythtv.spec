@@ -1,15 +1,13 @@
 %global kodi_addon pvr.mythtv
-%global kodi_version 18.0
-%global kodi_codename Leia
-
-%undefine __cmake_in_source_build
+%global kodi_version 19.0
+%global kodi_codename Matrix
 
 Name:           kodi-%(tr "." "-" <<<%{kodi_addon})
 # Use Epoch to manage upgrades from older upstream
 # (https://github.com/opdenkamp/xbmc-pvr-addons/)
 Epoch:          1
-Version:        5.10.15
-Release:        3%{?dist}
+Version:        7.0.5
+Release:        1%{?dist}
 Summary:        MythTV PVR for Kodi
 
 # Some cppmyth private headers are LGPLv2+
@@ -17,13 +15,14 @@ License:        GPLv2+ and LGPLv2+
 URL:            https://github.com/janbar/%{kodi_addon}/
 Source0:        %{url}/archive/%{version}-%{kodi_codename}/%{kodi_addon}-%{version}.tar.gz
 # Use external cppmyth library
-Patch0:         %{name}-5.10.15-use_external_cppmyth.patch
+Patch0:         %{name}-7.0.5-use_external_cppmyth.patch
+# Fix build with GCC10
+# Patch1:         %%{name}-7.0.5-gcc10.patch
 
 BuildRequires:  cmake3
 BuildRequires:  gcc-c++
 BuildRequires:  kodi-devel >= %{kodi_version}
-BuildRequires:  kodi-platform-devel >= %{kodi_version}
-BuildRequires:  pkgconfig(cppmyth) >= 2.12.1
+BuildRequires:  pkgconfig(cppmyth) >= 2.14.1
 BuildRequires:  platform-devel
 BuildRequires:  zlib-devel
 Requires:       kodi >= %{kodi_version}
@@ -51,11 +50,15 @@ find lib/cppmyth/ -type f -not -path "lib/cppmyth/src/private/*" -delete
 
 %files
 %doc README.md %{kodi_addon}/changelog.txt
+%license LICENSE.md
 %{_libdir}/kodi/addons/%{kodi_addon}/
 %{_datadir}/kodi/addons/%{kodi_addon}/
 
 
 %changelog
+* Thu Aug 20 2020 Mohamed El Morabity <melmorabity@fedoraproject.org> - 1:7.0.5-1
+- Update to 7.0.5 (switch to Matrix branch)
+
 * Tue Aug 18 2020 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 1:5.10.15-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
