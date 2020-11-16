@@ -6,7 +6,7 @@ Name:           kodi-%(tr "." "-" <<<%{kodi_addon})
 # Use Epoch to manage upgrades from older upstream
 # (https://github.com/opdenkamp/xbmc-pvr-addons/)
 Epoch:          1
-Version:        7.0.5
+Version:        7.1.1
 Release:        1%{?dist}
 Summary:        MythTV PVR for Kodi
 
@@ -16,13 +16,14 @@ URL:            https://github.com/janbar/%{kodi_addon}/
 Source0:        %{url}/archive/%{version}-%{kodi_codename}/%{kodi_addon}-%{version}.tar.gz
 # Use external cppmyth library
 Patch0:         %{name}-7.0.5-use_external_cppmyth.patch
+# Fix build with latest Kodi releases
+Patch1:         %{name}-7.1.1-build.patch
 
 BuildRequires:  cmake3
 BuildRequires:  gcc-c++
 BuildRequires:  kodi-devel >= %{kodi_version}
 BuildRequires:  pkgconfig(cppmyth) >= 2.14.1
-BuildRequires:  platform-devel
-BuildRequires:  zlib-devel
+BuildRequires:  pkgconfig(zlib)
 Requires:       kodi >= %{kodi_version}
 ExcludeArch:    %{power64} ppc64le
 
@@ -54,6 +55,9 @@ find lib/cppmyth/ -type f -not -path "lib/cppmyth/src/private/*" -delete
 
 
 %changelog
+* Mon Nov 16 2020 Mohamed El Morabity <melmorabity@fedoraproject.org> - 1:7.1.1-1
+- Update to 7.1.1
+
 * Thu Aug 20 2020 Mohamed El Morabity <melmorabity@fedoraproject.org> - 1:7.0.5-1
 - Update to 7.0.5 (switch to Matrix branch)
 
