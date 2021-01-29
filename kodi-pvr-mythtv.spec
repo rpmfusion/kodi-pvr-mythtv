@@ -16,8 +16,6 @@ URL:            https://github.com/janbar/%{kodi_addon}/
 Source0:        %{url}/archive/%{version}-%{kodi_codename}/%{kodi_addon}-%{version}.tar.gz
 # Use external cppmyth library
 Patch0:         %{name}-7.0.5-use_external_cppmyth.patch
-# Fix build with latest Kodi releases
-Patch1:         %{name}-7.1.1-build.patch
 
 BuildRequires:  cmake3
 BuildRequires:  gcc-c++
