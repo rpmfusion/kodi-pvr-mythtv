@@ -1,29 +1,31 @@
 %global kodi_addon pvr.mythtv
-%global kodi_version 19.0
-%global kodi_codename Matrix
+%global kodi_version 20
+%global kodi_codename Nexus
 
 Name:           kodi-%(tr "." "-" <<<%{kodi_addon})
 # Use Epoch to manage upgrades from older upstream
 # (https://github.com/opdenkamp/xbmc-pvr-addons/)
 Epoch:          1
-Version:        7.3.1
-Release:        4%{?dist}
+Version:        20.3.0
+Release:        1%{?dist}
 Summary:        MythTV PVR for Kodi
 
 # Some cppmyth private headers are LGPLv2+
-License:        GPLv2+ and LGPLv2+
+License:        GPL-2.0-or-later AND LGPL-3.0-or-later
 URL:            https://github.com/janbar/%{kodi_addon}/
 Source0:        %{url}/archive/%{version}-%{kodi_codename}/%{kodi_addon}-%{version}.tar.gz
+Source1:        %{name}.metainfo.xml
 # Use external cppmyth library
-Patch0:         %{name}-7.0.5-use_external_cppmyth.patch
+Patch0:         %{name}-20.3.0-use_external_cppmyth.patch
 
 BuildRequires:  cmake3
 BuildRequires:  gcc-c++
 BuildRequires:  kodi-devel >= %{kodi_version}
+BuildRequires:  libappstream-glib
 BuildRequires:  pkgconfig(cppmyth) >= 2.14.1
 BuildRequires:  pkgconfig(zlib)
 Requires:       kodi >= %{kodi_version}
-ExcludeArch:    %{power64} ppc64le
+ExcludeArch:    %{power64}
 
 %description
 %{summary}.
@@ -44,15 +46,28 @@ find lib/cppmyth/ -type f -not -path "lib/cppmyth/src/private/*" -delete
 %install
 %cmake3_install
 
+# Install AppData file
+install -Dpm 0644 %{SOURCE1} $RPM_BUILD_ROOT%{_metainfodir}/%{name}.metainfo.xml
+
+
+%check
+appstream-util validate-relax --nonet $RPM_BUILD_ROOT%{_metainfodir}/%{name}.metainfo.xml
+
 
 %files
 %doc README.md %{kodi_addon}/changelog.txt
 %license LICENSE.md
 %{_libdir}/kodi/addons/%{kodi_addon}/
 %{_datadir}/kodi/addons/%{kodi_addon}/
+%{_metainfodir}/%{name}.metainfo.xml
 
 
 %changelog
+* Sun Jan 29 2023 Mohamed El Morabity <melmorabity@fedoraproject.org> - 1:20.3.0-1
+- Update to 20.3.0
+- Add AppStream metadata
+- Switch to SPDX license identifiers
+
 * Sun Aug 07 2022 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 1:7.3.1-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_37_Mass_Rebuild and ffmpeg
   5.1

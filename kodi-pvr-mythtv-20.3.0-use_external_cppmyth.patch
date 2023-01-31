@@ -1,33 +1,34 @@
 diff -up ./CMakeLists.txt.orig ./CMakeLists.txt
---- ./CMakeLists.txt.orig	2020-07-15 07:57:28.000000000 +0000
-+++ ./CMakeLists.txt	2020-08-20 09:30:20.602092660 +0000
-@@ -7,8 +7,11 @@ set(CMAKE_CXX_STANDARD 11)
+--- ./CMakeLists.txt.orig	2022-09-28 12:05:08.000000000 +0200
++++ ./CMakeLists.txt	2023-01-31 11:30:47.934396991 +0100
+@@ -7,8 +7,13 @@ set(CMAKE_CXX_STANDARD 11)
  set(CMAKE_CXX_STANDARD_REQUIRED ON)
  
  find_package(Kodi REQUIRED)
 +find_package(PkgConfig)
 +pkg_check_modules(CPPMYTH REQUIRED cppmyth)
++
++set(DEPLIBS ${CPPMYTH_LIBRARIES})
  
  include_directories(${KODI_INCLUDE_DIR}/.. # Hack way with "/..", need bigger Kodi cmake rework to match right include ways
 +                    ${CPPMYTH_INCLUDE_DIRS}
                      ${PROJECT_SOURCE_DIR}/lib/cppmyth/src)
  
  add_definitions(-DUSE_DEMUX -D__STDC_FORMAT_MACROS)
-@@ -27,9 +30,7 @@ file (GLOB MYTHTV_HEADERS
+@@ -27,9 +32,6 @@ file (GLOB MYTHTV_HEADERS
    src/cppmyth/*.h
    src/*.h)
  
 -add_subdirectory(lib/cppmyth)
 -
 -set(DEPLIBS cppmyth)
-+set(DEPLIBS ${CPPMYTH_LIBRARIES})
  if(WIN32)
    list(APPEND DEPLIBS ws2_32)
  else()
 diff -up ./src/artworksmanager.h.orig ./src/artworksmanager.h
---- ./src/artworksmanager.h.orig	2020-07-15 07:57:28.000000000 +0000
-+++ ./src/artworksmanager.h	2020-08-20 09:56:06.292325528 +0000
-@@ -25,7 +25,7 @@
+--- ./src/artworksmanager.h.orig	2022-09-28 12:05:08.000000000 +0200
++++ ./src/artworksmanager.h	2023-01-31 11:12:45.794714411 +0100
+@@ -12,7 +12,7 @@
  #include "cppmyth/MythProgramInfo.h"
  
  #include <kodi/AddonBase.h>
@@ -37,9 +38,9 @@ diff -up ./src/artworksmanager.h.orig ./src/artworksmanager.h
  #include <string>
  
 diff -up ./src/avinfo.h.orig ./src/avinfo.h
---- ./src/avinfo.h.orig	2020-07-15 07:57:28.000000000 +0000
-+++ ./src/avinfo.h	2020-08-20 09:56:06.289325602 +0000
-@@ -23,7 +23,7 @@
+--- ./src/avinfo.h.orig	2022-09-28 12:05:08.000000000 +0200
++++ ./src/avinfo.h	2023-01-31 11:12:45.813714687 +0100
+@@ -10,7 +10,7 @@
  
  #include "demuxer/tsDemuxer.h"
  
@@ -49,11 +50,11 @@ diff -up ./src/avinfo.h.orig ./src/avinfo.h
  
  #include <set>
 diff -up ./src/cppmyth/MythChannel.h.orig ./src/cppmyth/MythChannel.h
---- ./src/cppmyth/MythChannel.h.orig	2020-07-15 07:57:28.000000000 +0000
-+++ ./src/cppmyth/MythChannel.h	2020-08-20 09:56:06.270326068 +0000
-@@ -19,7 +19,7 @@
-  *
-  */
+--- ./src/cppmyth/MythChannel.h.orig	2022-09-28 12:05:08.000000000 +0200
++++ ./src/cppmyth/MythChannel.h	2023-01-31 11:12:45.808714614 +0100
+@@ -8,7 +8,7 @@
+ 
+ #pragma once
  
 -#include <mythtypes.h>
 +#include <cppmyth/mythtypes.h>
@@ -61,11 +62,11 @@ diff -up ./src/cppmyth/MythChannel.h.orig ./src/cppmyth/MythChannel.h
  class MythChannel
  {
 diff -up ./src/cppmyth/MythEPGInfo.h.orig ./src/cppmyth/MythEPGInfo.h
---- ./src/cppmyth/MythEPGInfo.h.orig	2020-07-15 07:57:28.000000000 +0000
-+++ ./src/cppmyth/MythEPGInfo.h	2020-08-20 09:56:06.277325896 +0000
-@@ -19,7 +19,7 @@
-  *
-  */
+--- ./src/cppmyth/MythEPGInfo.h.orig	2022-09-28 12:05:08.000000000 +0200
++++ ./src/cppmyth/MythEPGInfo.h	2023-01-31 11:12:45.810714644 +0100
+@@ -8,7 +8,7 @@
+ 
+ #pragma once
  
 -#include <mythtypes.h>
 +#include <cppmyth/mythtypes.h>
@@ -73,11 +74,11 @@ diff -up ./src/cppmyth/MythEPGInfo.h.orig ./src/cppmyth/MythEPGInfo.h
  class MythEPGInfo
  {
 diff -up ./src/cppmyth/MythProgramInfo.h.orig ./src/cppmyth/MythProgramInfo.h
---- ./src/cppmyth/MythProgramInfo.h.orig	2020-07-15 07:57:28.000000000 +0000
-+++ ./src/cppmyth/MythProgramInfo.h	2020-08-20 09:56:06.283325749 +0000
-@@ -19,7 +19,7 @@
-  *
-  */
+--- ./src/cppmyth/MythProgramInfo.h.orig	2022-09-28 12:05:08.000000000 +0200
++++ ./src/cppmyth/MythProgramInfo.h	2023-01-31 11:12:45.804714556 +0100
+@@ -8,7 +8,7 @@
+ 
+ #pragma once
  
 -#include <mythtypes.h>
 +#include <cppmyth/mythtypes.h>
@@ -85,11 +86,11 @@ diff -up ./src/cppmyth/MythProgramInfo.h.orig ./src/cppmyth/MythProgramInfo.h
  class MythProgramInfo;
  typedef std::map<std::string, MythProgramInfo> ProgramInfoMap;
 diff -up ./src/cppmyth/MythRecordingRule.h.orig ./src/cppmyth/MythRecordingRule.h
---- ./src/cppmyth/MythRecordingRule.h.orig	2020-07-15 07:57:28.000000000 +0000
-+++ ./src/cppmyth/MythRecordingRule.h	2020-08-20 09:56:06.274325970 +0000
-@@ -19,7 +19,7 @@
-  *
-  */
+--- ./src/cppmyth/MythRecordingRule.h.orig	2022-09-28 12:05:08.000000000 +0200
++++ ./src/cppmyth/MythRecordingRule.h	2023-01-31 11:12:45.806714585 +0100
+@@ -8,7 +8,7 @@
+ 
+ #pragma once
  
 -#include <mythtypes.h>
 +#include <cppmyth/mythtypes.h>
@@ -97,11 +98,11 @@ diff -up ./src/cppmyth/MythRecordingRule.h.orig ./src/cppmyth/MythRecordingRule.
  class MythRecordingRule
  {
 diff -up ./src/cppmyth/MythScheduleManager.h.orig ./src/cppmyth/MythScheduleManager.h
---- ./src/cppmyth/MythScheduleManager.h.orig	2020-07-15 07:57:28.000000000 +0000
-+++ ./src/cppmyth/MythScheduleManager.h	2020-08-20 09:56:06.280325823 +0000
-@@ -19,7 +19,7 @@
-  *
-  */
+--- ./src/cppmyth/MythScheduleManager.h.orig	2022-09-28 12:05:08.000000000 +0200
++++ ./src/cppmyth/MythScheduleManager.h	2023-01-31 11:12:45.802714527 +0100
+@@ -8,7 +8,7 @@
+ 
+ #pragma once
  
 -#include <mythcontrol.h>
 +#include <cppmyth/mythcontrol.h>
@@ -109,21 +110,21 @@ diff -up ./src/cppmyth/MythScheduleManager.h.orig ./src/cppmyth/MythScheduleMana
  #include "MythProgramInfo.h"
  #include "MythEPGInfo.h"
 diff -up ./src/filestreaming.h.orig ./src/filestreaming.h
---- ./src/filestreaming.h.orig	2020-07-15 07:57:28.000000000 +0000
-+++ ./src/filestreaming.h	2020-08-20 09:56:06.286325675 +0000
-@@ -23,7 +23,7 @@
+--- ./src/filestreaming.h.orig	2022-09-28 12:05:08.000000000 +0200
++++ ./src/filestreaming.h	2023-01-31 11:12:45.800714498 +0100
+@@ -10,7 +10,7 @@
  
  #include <kodi/Filesystem.h>
  
 -#include <mythstream.h>
 +#include <cppmyth/mythstream.h>
  
- class ATTRIBUTE_HIDDEN FileStreaming : public Myth::Stream
+ class ATTR_DLL_LOCAL FileStreaming : public Myth::Stream
  {
 diff -up ./src/pvrclient-mythtv.h.orig ./src/pvrclient-mythtv.h
---- ./src/pvrclient-mythtv.h.orig	2020-07-15 07:57:28.000000000 +0000
-+++ ./src/pvrclient-mythtv.h	2020-08-20 09:56:06.267326142 +0000
-@@ -27,12 +27,12 @@
+--- ./src/pvrclient-mythtv.h.orig	2022-09-28 12:05:08.000000000 +0200
++++ ./src/pvrclient-mythtv.h	2023-01-31 11:12:45.797714454 +0100
+@@ -14,12 +14,12 @@
  #include "settings.h"
  
  #include <kodi/addon-instance/PVR.h>
