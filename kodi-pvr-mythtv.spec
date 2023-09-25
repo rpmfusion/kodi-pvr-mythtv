@@ -6,8 +6,8 @@ Name:           kodi-%(tr "." "-" <<<%{kodi_addon})
 # Use Epoch to manage upgrades from older upstream
 # (https://github.com/opdenkamp/xbmc-pvr-addons/)
 Epoch:          1
-Version:        20.3.2
-Release:        2%{?dist}
+Version:        20.5.5
+Release:        1%{?dist}
 Summary:        MythTV PVR for Kodi
 
 # Some cppmyth private headers are LGPLv2+
@@ -16,7 +16,7 @@ URL:            https://github.com/janbar/%{kodi_addon}/
 Source0:        %{url}/archive/%{version}-%{kodi_codename}/%{kodi_addon}-%{version}.tar.gz
 Source1:        %{name}.metainfo.xml
 # Use external cppmyth library
-Patch0:         %{name}-20.3.0-use_external_cppmyth.patch
+Patch0:         %{name}-20.5.5-use_external_cppmyth.patch
 
 BuildRequires:  cmake3
 BuildRequires:  gcc-c++
@@ -63,6 +63,9 @@ appstream-util validate-relax --nonet $RPM_BUILD_ROOT%{_metainfodir}/%{name}.met
 
 
 %changelog
+* Sun Sep 24 2023 Mohamed El Morabity <melmorabity@fedoraproject.org> - 1:20.5.5-1
+- Update to 20.5.5
+
 * Wed Aug 02 2023 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 1:20.3.2-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_39_Mass_Rebuild
 
