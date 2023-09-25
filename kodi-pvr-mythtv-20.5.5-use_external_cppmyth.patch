@@ -1,0 +1,157 @@
+diff -up ./CMakeLists.txt.orig ./CMakeLists.txt
+--- ./CMakeLists.txt.orig	2023-09-19 20:34:03.000000000 +0200
++++ ./CMakeLists.txt	2023-09-24 22:39:22.298723793 +0200
+@@ -7,8 +7,13 @@ set(CMAKE_CXX_STANDARD 11)
+ set(CMAKE_CXX_STANDARD_REQUIRED ON)
+ 
+ find_package(Kodi REQUIRED)
++find_package(PkgConfig)
++pkg_check_modules(CPPMYTH REQUIRED cppmyth)
++
++set(DEPLIBS ${CPPMYTH_LIBRARIES})
+ 
+ include_directories(${KODI_INCLUDE_DIR}/.. # Hack way with "/..", need bigger Kodi cmake rework to match right include ways
++                    ${CPPMYTH_INCLUDE_DIRS}
+                     ${PROJECT_SOURCE_DIR}/lib/cppmyth/src)
+ 
+ add_definitions(-DUSE_DEMUX -D__STDC_FORMAT_MACROS)
+@@ -27,9 +32,6 @@ file (GLOB MYTHTV_HEADERS
+   src/cppmyth/*.h
+   src/*.h)
+ 
+-add_subdirectory(lib/cppmyth)
+-
+-set(DEPLIBS cppmyth)
+ if(WIN32)
+   list(APPEND DEPLIBS ws2_32)
+ else()
+diff -up ./src/artworksmanager.h.orig ./src/artworksmanager.h
+--- ./src/artworksmanager.h.orig	2023-09-19 20:34:03.000000000 +0200
++++ ./src/artworksmanager.h	2023-09-24 22:39:22.299723783 +0200
+@@ -12,7 +12,7 @@
+ #include "cppmyth/MythProgramInfo.h"
+ 
+ #include <kodi/AddonBase.h>
+-#include <mythwsapi.h>
++#include <cppmyth/mythwsapi.h>
+ 
+ #include <string>
+ 
+diff -up ./src/avinfo.h.orig ./src/avinfo.h
+--- ./src/avinfo.h.orig	2023-09-19 20:34:03.000000000 +0200
++++ ./src/avinfo.h	2023-09-24 22:39:22.299723783 +0200
+@@ -10,7 +10,7 @@
+ 
+ #include "demuxer/tsDemuxer.h"
+ 
+-#include <mythstream.h>
++#include <cppmyth/mythstream.h>
+ #include <kodi/AddonBase.h>
+ 
+ #include <set>
+diff -up ./src/cppmyth/MythChannel.h.orig ./src/cppmyth/MythChannel.h
+--- ./src/cppmyth/MythChannel.h.orig	2023-09-19 20:34:03.000000000 +0200
++++ ./src/cppmyth/MythChannel.h	2023-09-24 22:39:22.299723783 +0200
+@@ -8,7 +8,7 @@
+ 
+ #pragma once
+ 
+-#include <mythtypes.h>
++#include <cppmyth/mythtypes.h>
+ 
+ class MythChannel
+ {
+diff -up ./src/cppmyth/MythEPGInfo.h.orig ./src/cppmyth/MythEPGInfo.h
+--- ./src/cppmyth/MythEPGInfo.h.orig	2023-09-19 20:34:03.000000000 +0200
++++ ./src/cppmyth/MythEPGInfo.h	2023-09-24 22:39:22.300723773 +0200
+@@ -8,7 +8,7 @@
+ 
+ #pragma once
+ 
+-#include <mythtypes.h>
++#include <cppmyth/mythtypes.h>
+ 
+ class MythEPGInfo
+ {
+diff -up ./src/cppmyth/MythProgramInfo.h.orig ./src/cppmyth/MythProgramInfo.h
+--- ./src/cppmyth/MythProgramInfo.h.orig	2023-09-19 20:34:03.000000000 +0200
++++ ./src/cppmyth/MythProgramInfo.h	2023-09-24 22:39:22.300723773 +0200
+@@ -8,7 +8,7 @@
+ 
+ #pragma once
+ 
+-#include <mythtypes.h>
++#include <cppmyth/mythtypes.h>
+ 
+ class MythProgramInfo;
+ typedef std::map<std::string, MythProgramInfo> ProgramInfoMap;
+diff -up ./src/cppmyth/MythRecordingRule.h.orig ./src/cppmyth/MythRecordingRule.h
+--- ./src/cppmyth/MythRecordingRule.h.orig	2023-09-19 20:34:03.000000000 +0200
++++ ./src/cppmyth/MythRecordingRule.h	2023-09-24 22:39:22.300723773 +0200
+@@ -8,7 +8,7 @@
+ 
+ #pragma once
+ 
+-#include <mythtypes.h>
++#include <cppmyth/mythtypes.h>
+ 
+ class MythRecordingRule
+ {
+diff -up ./src/cppmyth/MythScheduleManager.h.orig ./src/cppmyth/MythScheduleManager.h
+--- ./src/cppmyth/MythScheduleManager.h.orig	2023-09-19 20:34:03.000000000 +0200
++++ ./src/cppmyth/MythScheduleManager.h	2023-09-24 22:39:22.300723773 +0200
+@@ -8,7 +8,7 @@
+ 
+ #pragma once
+ 
+-#include <mythcontrol.h>
++#include <cppmyth/mythcontrol.h>
+ #include "MythRecordingRule.h"
+ #include "MythProgramInfo.h"
+ #include "MythEPGInfo.h"
+diff -up ./src/demux.h.orig ./src/demux.h
+--- ./src/demux.h.orig	2023-09-19 20:34:03.000000000 +0200
++++ ./src/demux.h	2023-09-24 22:40:53.265820908 +0200
+@@ -9,7 +9,7 @@
+ 
+ #include "demuxer/tsDemuxer.h"
+ 
+-#include <mythstream.h>
++#include <cppmyth/mythstream.h>
+ #include <kodi/addon-instance/PVR.h>
+ #include "private/os/threads/thread.h"
+ #include "private/os/threads/mutex.h"
+diff -up ./src/filestreaming.h.orig ./src/filestreaming.h
+--- ./src/filestreaming.h.orig	2023-09-19 20:34:03.000000000 +0200
++++ ./src/filestreaming.h	2023-09-24 22:39:22.301723763 +0200
+@@ -10,7 +10,7 @@
+ 
+ #include <kodi/Filesystem.h>
+ 
+-#include <mythstream.h>
++#include <cppmyth/mythstream.h>
+ 
+ class ATTR_DLL_LOCAL FileStreaming : public Myth::Stream
+ {
+diff -up ./src/pvrclient-mythtv.h.orig ./src/pvrclient-mythtv.h
+--- ./src/pvrclient-mythtv.h.orig	2023-09-19 20:34:03.000000000 +0200
++++ ./src/pvrclient-mythtv.h	2023-09-24 22:39:22.301723763 +0200
+@@ -14,12 +14,12 @@
+ #include "settings.h"
+ 
+ #include <kodi/addon-instance/PVR.h>
+-#include <mythsharedptr.h>
+-#include <mythcontrol.h>
+-#include <mytheventhandler.h>
+-#include <mythlivetvplayback.h>
+-#include <mythrecordingplayback.h>
+-#include <mythdebug.h>
++#include <cppmyth/mythsharedptr.h>
++#include <cppmyth/mythcontrol.h>
++#include <cppmyth/mytheventhandler.h>
++#include <cppmyth/mythlivetvplayback.h>
++#include <cppmyth/mythrecordingplayback.h>
++#include <cppmyth/mythdebug.h>
+ 
+ #include <string>
+ #include <vector>
