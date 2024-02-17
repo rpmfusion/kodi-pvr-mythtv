@@ -1,0 +1,12 @@
+--- ./src/pvrclient-mythtv.cpp
++++ ./src/pvrclient-mythtv.cpp
+@@ -641,7 +641,7 @@
+     }
+     tag.SetEpisodePartNumber(EPG_TAG_INVALID_SERIES_EPISODE);
+     tag.SetParentalRating(0);
+-    tag.SetStarRating(static_cast<int>(it->second->stars * 10.0));
++    tag.SetStarRating(static_cast<int>(std::stod(it->second->stars) * 10.0));
+     tag.SetOriginalTitle("");
+     tag.SetCast("");
+     tag.SetDirector("");
+

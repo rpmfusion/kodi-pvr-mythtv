@@ -17,6 +17,7 @@ Source0:        %{url}/archive/%{version}-%{kodi_codename}/%{kodi_addon}-%{versi
 Source1:        %{name}.metainfo.xml
 # Use external cppmyth library
 Patch0:         %{name}-20.5.5-use_external_cppmyth.patch
+Patch1:         buildfix_gcc14.patch
 
 BuildRequires:  cmake
 BuildRequires:  gcc-c++
