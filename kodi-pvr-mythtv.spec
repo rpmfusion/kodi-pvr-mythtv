@@ -6,7 +6,7 @@ Name:           kodi-%(tr "." "-" <<<%{kodi_addon})
 # Use Epoch to manage upgrades from older upstream
 # (https://github.com/opdenkamp/xbmc-pvr-addons/)
 Epoch:          1
-Version:        20.6.1
+Version:        20.6.9
 Release:        1%{?dist}
 Summary:        MythTV PVR for Kodi
 
@@ -64,6 +64,9 @@ appstream-util validate-relax --nonet $RPM_BUILD_ROOT%{_metainfodir}/%{name}.met
 
 
 %changelog
+* Sun Mar 10 2024 Mohamed El Morabity <melmorabity@fedoraproject.org> - 1:20.6.9-1
+- Update to 20.6.9
+
 * Sat Feb 17 2024 Leigh Scott <leigh123linux@gmail.com> - 1:20.6.1-1
 - Update to 20.6.1
 
