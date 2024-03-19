@@ -1,12 +1,12 @@
 %global kodi_addon pvr.mythtv
-%global kodi_version 20
-%global kodi_codename Nexus
+%global kodi_version 21
+%global kodi_codename Omega
 
 Name:           kodi-%(tr "." "-" <<<%{kodi_addon})
 # Use Epoch to manage upgrades from older upstream
 # (https://github.com/opdenkamp/xbmc-pvr-addons/)
 Epoch:          1
-Version:        20.6.9
+Version:        21.1.8
 Release:        1%{?dist}
 Summary:        MythTV PVR for Kodi
 
@@ -64,6 +64,9 @@ appstream-util validate-relax --nonet $RPM_BUILD_ROOT%{_metainfodir}/%{name}.met
 
 
 %changelog
+* Thu Mar 14 2024 Mohamed El Morabity <melmorabity@fedoraproject.org> - 1:21.1.8-1
+- Update to 21.1.8
+
 * Sun Mar 10 2024 Mohamed El Morabity <melmorabity@fedoraproject.org> - 1:20.6.9-1
 - Update to 20.6.9
 
