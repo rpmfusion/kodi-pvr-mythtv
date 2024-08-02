@@ -7,7 +7,7 @@ Name:           kodi-%(tr "." "-" <<<%{kodi_addon})
 # (https://github.com/opdenkamp/xbmc-pvr-addons/)
 Epoch:          1
 Version:        21.1.8
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        MythTV PVR for Kodi
 
 # Some cppmyth private headers are LGPLv2+
@@ -64,6 +64,9 @@ appstream-util validate-relax --nonet $RPM_BUILD_ROOT%{_metainfodir}/%{name}.met
 
 
 %changelog
+* Fri Aug 02 2024 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 1:21.1.8-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_41_Mass_Rebuild
+
 * Thu Mar 14 2024 Mohamed El Morabity <melmorabity@fedoraproject.org> - 1:21.1.8-1
 - Update to 21.1.8
 
