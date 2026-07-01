@@ -18,7 +18,6 @@ Source1:        %{name}.metainfo.xml
 # Use external cppmyth library
 Patch0:         %{name}-20.5.5-use_external_cppmyth.patch
 Patch1:         buildfix_gcc14.patch
-Patch2:         fix-build-with-old-system-cppmyth.patch
 
 BuildRequires:  cmake
 BuildRequires:  gcc-c++
